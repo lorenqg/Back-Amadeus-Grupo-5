@@ -1,6 +1,6 @@
 package com.adventureAPI.AdventureAPI.interfaces;
 
-import com.adventureAPI.AdventureAPI.Models.User;
+import com.adventureAPI.AdventureAPI.models.User;
 
 import java.util.List;
 

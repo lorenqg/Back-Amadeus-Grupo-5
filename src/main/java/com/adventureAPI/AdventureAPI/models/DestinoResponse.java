@@ -1,4 +1,4 @@
-package com.example.apiRest.Models;
+package com.adventureAPI.AdventureAPI.models;
 
 public class DestinoResponse {
 

@@ -1,5 +1,7 @@
 package com.adventureAPI.AdventureAPI.interfaces;
 
+import com.adventureAPI.AdventureAPI.models.DestinoInfo;
+
 import java.util.List;
 
 public interface BaseDestinoInfoService {
