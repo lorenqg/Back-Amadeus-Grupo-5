@@ -1,4 +1,4 @@
-package com.adventureAPI.AdventureAPI.Services;
+package com.adventureAPI.AdventureAPI.services;
 
 import com.adventureAPI.AdventureAPI.interfaces.BaseUserService;
 import com.adventureAPI.AdventureAPI.models.User;

@@ -1,12 +1,12 @@
 package com.adventureAPI.AdventureAPI.repositories;
 
 import com.adventureAPI.AdventureAPI.models.DestinoInfo;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 
-public interface DestinoInfoRepository extends JpaRepository<DestinoInfo, Integer> {
+public interface DestinoInfoRepository extends CrudRepository<DestinoInfo, Integer> {
 
     //FindAll
     @Query(

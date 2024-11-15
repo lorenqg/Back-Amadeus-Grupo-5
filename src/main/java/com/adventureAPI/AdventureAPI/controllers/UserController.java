@@ -1,6 +1,6 @@
-package com.adventureAPI.AdventureAPI.Controllers;
+package com.adventureAPI.AdventureAPI.controllers;
 
-import com.adventureAPI.AdventureAPI.Services.UserService;
+import com.adventureAPI.AdventureAPI.services.UserService;
 import com.adventureAPI.AdventureAPI.models.User;
 import com.adventureAPI.AdventureAPI.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;

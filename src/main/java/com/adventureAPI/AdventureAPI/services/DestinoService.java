@@ -1,9 +1,10 @@
-package com.adventureAPI.AdventureAPI.Services;
+package com.adventureAPI.AdventureAPI.services;
 
 import com.adventureAPI.AdventureAPI.interfaces.BaseDestinoInfoService;
 import com.adventureAPI.AdventureAPI.models.DestinoInfo;
 import com.adventureAPI.AdventureAPI.models.DestinoRequest;
 import com.adventureAPI.AdventureAPI.models.DestinoResponse;
+import com.adventureAPI.AdventureAPI.models.User;
 import com.adventureAPI.AdventureAPI.repositories.DestinoInfoRepository;
 import org.springframework.stereotype.Service;
 
@@ -12,10 +13,10 @@ import java.util.List;
 @Service
 public class DestinoService implements BaseDestinoInfoService {
 
-    private final DestinoInfoRepository destinoInfoRespository;
+    private final DestinoInfoRepository _destinoInfoRespository;
 
     public DestinoService(DestinoInfoRepository destinoInfoRespository) {
-        this.destinoInfoRespository = destinoInfoRespository;
+        this._destinoInfoRespository = destinoInfoRespository;
     }
 
     // Método para enviar destino
@@ -144,27 +145,36 @@ public class DestinoService implements BaseDestinoInfoService {
         return destinoResponse;
     }
 
-//    public DestinoInfo saveDestinity(DestinoInfo destinoInfo) {
-//        return destinoInfoRespository.save(destinoInfo);
-//    }
-
+    // FindAll
     @Override
     public List<DestinoInfo> index() {
-        return destinoInfoRespository.index();
+        return _destinoInfoRespository.index();
     }
 
     @Override
     public DestinoInfo create(DestinoInfo destinoInfo) {
-        return destinoInfoRespository.saveAndFlush(destinoInfo);
+        return _destinoInfoRespository.saveAndFlush(destinoInfo);
     }
 
     @Override
     public List<DestinoInfo> searchByName(String destino1, String destino2) {
-        return destinoInfoRespository.searchByName(destino1, destino2);
+        return _destinoInfoRespository.searchByName(destino1, destino2);
     }
 
     @Override
     public List<DestinoInfo> searchById(int id) {
-        return destinoInfoRespository.searchById(id);
+        return _destinoInfoRespository.searchById(id);
+    }
+
+    //Delete
+    @Override
+    public DestinoInfo delete(int id) {
+        List<DestinoInfo> destinoInfoList = _destinoInfoRespository.searchById(id);
+        if (destinoInfoList.size() > 0) {
+            DestinoInfo destinoInfoDelete = destinoInfoList.get(0);
+            _destinoInfoRespository.delete(destinoInfoDelete);
+            return destinoInfoDelete;
+        }
+        return null;
     }
 }

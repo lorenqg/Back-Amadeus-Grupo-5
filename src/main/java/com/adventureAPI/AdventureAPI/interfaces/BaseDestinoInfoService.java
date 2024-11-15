@@ -1,6 +1,7 @@
 package com.adventureAPI.AdventureAPI.interfaces;
 
 import com.adventureAPI.AdventureAPI.models.DestinoInfo;
+import com.adventureAPI.AdventureAPI.models.User;
 
 import java.util.List;
 
@@ -17,5 +18,9 @@ public interface BaseDestinoInfoService {
 
     //SearchById
     List<DestinoInfo> searchById (int id);
+
+    //delete
+    DestinoInfo delete(int id);
+
 
 }
