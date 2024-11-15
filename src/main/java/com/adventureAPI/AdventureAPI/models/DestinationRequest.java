@@ -1,6 +1,6 @@
 package com.adventureAPI.AdventureAPI.models;
 
-public class DestinoRequest {
+public class DestinationRequest {
 
     private String pDestino;
     private String pClimatica;
@@ -11,7 +11,7 @@ public class DestinoRequest {
 
 
     // Constructor
-    public DestinoRequest(String pDestino, String pClimatica, String pActividad, String pAlojamiento, String dViaje, String edad) {
+    public DestinationRequest(String pDestino, String pClimatica, String pActividad, String pAlojamiento, String dViaje, String edad) {
         this.pDestino = pDestino;
         this.pClimatica = pClimatica;
         this.pActividad = pActividad;

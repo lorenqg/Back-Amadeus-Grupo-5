@@ -1,28 +1,27 @@
 package com.adventureAPI.AdventureAPI.services;
 
 import com.adventureAPI.AdventureAPI.interfaces.BaseDestinoInfoService;
-import com.adventureAPI.AdventureAPI.models.DestinoInfo;
-import com.adventureAPI.AdventureAPI.models.DestinoRequest;
-import com.adventureAPI.AdventureAPI.models.DestinoResponse;
-import com.adventureAPI.AdventureAPI.models.User;
-import com.adventureAPI.AdventureAPI.repositories.DestinoInfoRepository;
+import com.adventureAPI.AdventureAPI.models.DestinationInfo;
+import com.adventureAPI.AdventureAPI.models.DestinationRequest;
+import com.adventureAPI.AdventureAPI.models.DestinationResponse;
+import com.adventureAPI.AdventureAPI.repositories.DestinationInfoRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class DestinoService implements BaseDestinoInfoService {
+public class DestinationService implements BaseDestinoInfoService {
 
-    private final DestinoInfoRepository _destinoInfoRespository;
+    private final DestinationInfoRepository _destinoInfoRespository;
 
-    public DestinoService(DestinoInfoRepository destinoInfoRespository) {
+    public DestinationService(DestinationInfoRepository destinoInfoRespository) {
         this._destinoInfoRespository = destinoInfoRespository;
     }
 
     // Método para enviar destino
-    public DestinoResponse enviarDestino(String pDestino, String pClimatica, String pActividad, String pAlojamiento, String dViaje, String edad) {
+    public DestinationResponse enviarDestino(String pDestino, String pClimatica, String pActividad, String pAlojamiento, String dViaje, String edad) {
 
-        DestinoRequest destinoRequest = new DestinoRequest(pDestino, pClimatica, pActividad, pAlojamiento, dViaje, edad);
+        DestinationRequest destinationRequest = new DestinationRequest(pDestino, pClimatica, pActividad, pAlojamiento, dViaje, edad);
 
         // Reseteamos destinos antes de procesar
         String destinoA = "";
@@ -136,42 +135,42 @@ public class DestinoService implements BaseDestinoInfoService {
         }
 
         // Crear el objeto con los destinos seleccionados
-        DestinoResponse destinoResponse = new DestinoResponse(destinoA, destinoE);
+        DestinationResponse destinationResponse = new DestinationResponse(destinoA, destinoE);
 
         // Guardar los destinos de el usuario en la base de datos
         //destinoRepository.save(destinoRequest);
 
         // Asignamos los destinos
-        return destinoResponse;
+        return destinationResponse;
     }
 
     // FindAll
     @Override
-    public List<DestinoInfo> index() {
+    public List<DestinationInfo> index() {
         return _destinoInfoRespository.index();
     }
 
     @Override
-    public DestinoInfo create(DestinoInfo destinoInfo) {
+    public DestinationInfo create(DestinationInfo destinoInfo) {
         return _destinoInfoRespository.saveAndFlush(destinoInfo);
     }
 
     @Override
-    public List<DestinoInfo> searchByName(String destino1, String destino2) {
+    public List<DestinationInfo> searchByName(String destino1, String destino2) {
         return _destinoInfoRespository.searchByName(destino1, destino2);
     }
 
     @Override
-    public List<DestinoInfo> searchById(int id) {
+    public List<DestinationInfo> searchById(int id) {
         return _destinoInfoRespository.searchById(id);
     }
 
     //Delete
     @Override
-    public DestinoInfo delete(int id) {
-        List<DestinoInfo> destinoInfoList = _destinoInfoRespository.searchById(id);
+    public DestinationInfo delete(int id) {
+        List<DestinationInfo> destinoInfoList = _destinoInfoRespository.searchById(id);
         if (destinoInfoList.size() > 0) {
-            DestinoInfo destinoInfoDelete = destinoInfoList.get(0);
+            DestinationInfo destinoInfoDelete = destinoInfoList.get(0);
             _destinoInfoRespository.delete(destinoInfoDelete);
             return destinoInfoDelete;
         }

@@ -1,12 +1,12 @@
 package com.adventureAPI.AdventureAPI.models;
 
-public class DestinoResponse {
+public class DestinationResponse {
 
     private String destinoA;
     private String destinoE;
 
     // Constructor
-    public DestinoResponse(String destinoA, String destinoE) {
+    public DestinationResponse(String destinoA, String destinoE) {
         this.destinoA = destinoA;
         this.destinoE = destinoE;
     }

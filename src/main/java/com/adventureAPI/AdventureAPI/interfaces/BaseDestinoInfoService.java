@@ -1,26 +1,25 @@
 package com.adventureAPI.AdventureAPI.interfaces;
 
-import com.adventureAPI.AdventureAPI.models.DestinoInfo;
-import com.adventureAPI.AdventureAPI.models.User;
+import com.adventureAPI.AdventureAPI.models.DestinationInfo;
 
 import java.util.List;
 
 public interface BaseDestinoInfoService {
 
     //FindAll
-    List<DestinoInfo> index();
+    List<DestinationInfo> index();
 
     //Create
-    DestinoInfo create(DestinoInfo destinoInfo);
+    DestinationInfo create(DestinationInfo destinoInfo);
 
     //SearchByName
-    List<DestinoInfo> searchByName (String destino1, String destino2);
+    List<DestinationInfo> searchByName (String destino1, String destino2);
 
     //SearchById
-    List<DestinoInfo> searchById (int id);
+    List<DestinationInfo> searchById (int id);
 
     //delete
-    DestinoInfo delete(int id);
+    DestinationInfo delete(int id);
 
 
 }

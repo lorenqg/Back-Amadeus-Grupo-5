@@ -1,36 +1,36 @@
 package com.adventureAPI.AdventureAPI.repositories;
 
-import com.adventureAPI.AdventureAPI.models.DestinoInfo;
+import com.adventureAPI.AdventureAPI.models.DestinationInfo;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 
-public interface DestinoInfoRepository extends CrudRepository<DestinoInfo, Integer> {
+public interface DestinationInfoRepository extends CrudRepository<DestinationInfo, Integer> {
 
     //FindAll
     @Query(
             nativeQuery = true,
             value = "SELECT * FROM destino_info"
     )
-    List<DestinoInfo> index();
+    List<DestinationInfo> index();
 
     //Create
-    DestinoInfo saveAndFlush(DestinoInfo destinoInfo);
+    DestinationInfo saveAndFlush(DestinationInfo destinoInfo);
 
     //FindByName
     @Query(
             nativeQuery = true,
             value = "SELECT * FROM destino_info WHERE nombre_destino LIKE %:destino1% OR nombre_destino LIKE %:destino2%"
     )
-    List<DestinoInfo> searchByName(String destino1, String destino2);
+    List<DestinationInfo> searchByName(String destino1, String destino2);
 
     //FindById
     @Query(
             nativeQuery = true,
             value = "SELECT * FROM destino_info WHERE id = :id"
     )
-    List<DestinoInfo> searchById(int id);
+    List<DestinationInfo> searchById(int id);
 
 
 }

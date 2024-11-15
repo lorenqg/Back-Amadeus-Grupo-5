@@ -70,6 +70,4 @@ public class UserController {
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
-    //Get o Post(Body) para llamar a las preguntas y logica de destino
-    //Traer los destinos de las DB
 }
