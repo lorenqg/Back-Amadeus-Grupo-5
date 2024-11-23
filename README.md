@@ -96,7 +96,7 @@ Para construir y ejecutar el proyecto, utiliza los siguientes comandos:
 
 ### Buscar Destino por Nombre
 
-- **URL:** `/api/searchName/{destino1}/{destino2}`
+- **URL:** `/destination/searchName/{destino1}/{destino2}`
 - **Método:** `GET`
 
 ### Parámetros:
