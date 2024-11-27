@@ -39,8 +39,8 @@ public class DestinationService implements BaseDestinoInfoService {
         return _destinationOptionsRepository.findByCombination(
                         destinationEnum, weatherEnum, activityEnum, accommodationEnum, travelDurationEnum, ageEnum
                 ).map(option -> {
-                    List<DestinationInfo> destinationInfos = _destinoInfoRespository.searchByName(option.getidAmericaDestination(), option.getidEuropaDestination());
-                    return new DestinationResponse(option.getidAmericaDestination(), option.getidEuropaDestination(), destinationInfos);
+                    List<DestinationInfo> destinationInfos = _destinoInfoRespository.searchByName(option.getNameAmericaDestination(), option.getNameEuropaDestination());
+                    return new DestinationResponse(option.getNameAmericaDestination(), option.getNameEuropaDestination(), destinationInfos);
                 })
                 .orElseGet(() -> {
                     List<DestinationInfo> defaultDestinationInfos = _destinoInfoRespository.searchByName("Bora Bora", "Dubái");

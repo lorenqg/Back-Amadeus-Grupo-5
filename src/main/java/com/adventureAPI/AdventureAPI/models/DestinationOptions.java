@@ -3,6 +3,8 @@ package com.adventureAPI.AdventureAPI.models;
 import com.adventureAPI.AdventureAPI.models.enums.*;
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "destination_options")
 public class DestinationOptions {
@@ -29,23 +31,22 @@ public class DestinationOptions {
     @Enumerated(EnumType.STRING)
     private Age age;
 
-    private String idAmericaDestination;
-    private String idEuropaDestination;
+    private String nameAmericaDestination;
+    private String nameEuropaDestination;
 
     public DestinationOptions() {
     }
 
-    public DestinationOptions(Destination destination, Weather weather, Activity activity, Accommodation accommodation, TravelDuration travelDuration, Age age, String idAmericaDestination, String idEuropaDestination) {
+    public DestinationOptions(Destination destination, Weather weather, Activity activity, Accommodation accommodation, TravelDuration travelDuration, Age age, String nameAmericaDestination, String nameEuropaDestination) {
         this.destination = destination;
         this.weather = weather;
         this.activity = activity;
         this.accommodation = accommodation;
         this.travelDuration = travelDuration;
         this.age = age;
-        this.idAmericaDestination = idAmericaDestination;
-        this.idEuropaDestination = idEuropaDestination;
+        this.nameAmericaDestination = nameAmericaDestination;
+        this.nameEuropaDestination = nameEuropaDestination;
     }
-
 
     public int getId() {
         return id;
@@ -103,19 +104,19 @@ public class DestinationOptions {
         this.age = age;
     }
 
-    public String getidAmericaDestination() {
-        return idAmericaDestination;
+    public String getNameAmericaDestination() {
+        return nameAmericaDestination;
     }
 
-    public void setidAmericaDestination(String idAmericaDestination) {
-        this.idAmericaDestination = idAmericaDestination;
+    public void setNameAmericaDestination(String nameAmericaDestination) {
+        this.nameAmericaDestination = nameAmericaDestination;
     }
 
-    public String getidEuropaDestination() {
-        return idEuropaDestination;
+    public String getNameEuropaDestination() {
+        return nameEuropaDestination;
     }
 
-    public void setidEuropaDestination(String idEuropaDestination) {
-        this.idEuropaDestination = idEuropaDestination;
+    public void setNameEuropaDestination(String nameEuropaDestination) {
+        this.nameEuropaDestination = nameEuropaDestination;
     }
 }
