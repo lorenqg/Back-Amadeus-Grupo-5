@@ -3,7 +3,7 @@ package com.adventureAPI.AdventureAPI.models;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "destino_info")
+@Table(name = "destination_info")
 public class DestinationInfo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,8 +17,12 @@ public class DestinationInfo {
     private String continente;
 
     @ManyToOne
-    @JoinColumn(name = "destination_options_id")
+    @JoinColumn(name = "destination_options")
     private DestinationOptions destinationOptions;
+
+    @ManyToOne
+    @JoinColumn(name = "destination_entity_id")
+    private DestinationEntity destinationEntity;
 
     public int getId() {
         return id;

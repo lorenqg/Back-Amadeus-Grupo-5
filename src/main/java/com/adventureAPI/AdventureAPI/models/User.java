@@ -2,6 +2,8 @@ package com.adventureAPI.AdventureAPI.models;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "users")
 public class User {
@@ -11,8 +13,8 @@ public class User {
     private String name;
     private String email;
 
-
-
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<DestinationEntity> destinationResponses;
 
     public int getId() {
         return id;
