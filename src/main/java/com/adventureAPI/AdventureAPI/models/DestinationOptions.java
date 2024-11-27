@@ -29,8 +29,22 @@ public class DestinationOptions {
     @Enumerated(EnumType.STRING)
     private Age age;
 
-    private String destinoA;
-    private String destinoE;
+    private String idAmericaDestination;
+    private String idEuropaDestination;
+
+    public DestinationOptions() {
+    }
+
+    public DestinationOptions(Destination destination, Weather weather, Activity activity, Accommodation accommodation, TravelDuration travelDuration, Age age, String idAmericaDestination, String idEuropaDestination) {
+        this.destination = destination;
+        this.weather = weather;
+        this.activity = activity;
+        this.accommodation = accommodation;
+        this.travelDuration = travelDuration;
+        this.age = age;
+        this.idAmericaDestination = idAmericaDestination;
+        this.idEuropaDestination = idEuropaDestination;
+    }
 
 
     public int getId() {
@@ -89,19 +103,19 @@ public class DestinationOptions {
         this.age = age;
     }
 
-    public String getdestinoA() {
-        return destinoA;
+    public String getidAmericaDestination() {
+        return idAmericaDestination;
     }
 
-    public void setdestinoA(String destinoA) {
-        this.destinoA = destinoA;
+    public void setidAmericaDestination(String idAmericaDestination) {
+        this.idAmericaDestination = idAmericaDestination;
     }
 
-    public String getdestinoE() {
-        return destinoE;
+    public String getidEuropaDestination() {
+        return idEuropaDestination;
     }
 
-    public void setdestinoE(String destinoE) {
-        this.destinoE = destinoE;
+    public void setidEuropaDestination(String idEuropaDestination) {
+        this.idEuropaDestination = idEuropaDestination;
     }
 }

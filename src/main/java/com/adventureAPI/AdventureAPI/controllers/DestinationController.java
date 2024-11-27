@@ -53,6 +53,11 @@ public class DestinationController {
         );
     }
 
+    @PostMapping("/loadCombinations")
+    public void loadCombination() {
+        destinationService.loadCombinations();
+    }
+
     @PostMapping("/guardarDestino")
     public ResponseEntity<DestinationInfo> create(@RequestBody DestinationInfo destinoInfo) {
         DestinationInfo destinoCreated = _destinoInfoRespository.saveAndFlush(destinoInfo);

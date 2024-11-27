@@ -2,15 +2,17 @@ package com.adventureAPI.AdventureAPI.services;
 
 import com.adventureAPI.AdventureAPI.interfaces.BaseDestinoInfoService;
 import com.adventureAPI.AdventureAPI.models.DestinationInfo;
-import com.adventureAPI.AdventureAPI.models.DestinationRequest;
+import com.adventureAPI.AdventureAPI.models.DestinationOptions;
 import com.adventureAPI.AdventureAPI.models.DestinationResponse;
 import com.adventureAPI.AdventureAPI.models.enums.*;
 import com.adventureAPI.AdventureAPI.repositories.DestinationInfoRepository;
 import com.adventureAPI.AdventureAPI.repositories.DestinationOptionsRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -26,144 +28,69 @@ public class DestinationService implements BaseDestinoInfoService {
 
     public DestinationResponse sendCombination(String pDestino, String pClimatica, String pActividad, String pAlojamiento, String dViaje, String edad) {
 
-        Destination destinationEnum = Destination.valueOf(pDestino.toUpperCase().replace("", "_"));
-        Weather weatherEnum = Weather.valueOf(pClimatica.toUpperCase().replace("", "_"));
-        Activity activityEnum = Activity.valueOf(pActividad.toUpperCase().replace("", "_"));
-        Accommodation accommodationEnum = Accommodation.valueOf(pAlojamiento.toUpperCase().replace("", "_"));
-        TravelDuration travelDurationEnum = TravelDuration.valueOf(dViaje.toUpperCase().replace("", "_"));
-        Age ageEnum = Age.valueOf(edad.toUpperCase().replace("", "_"));
+        Destination destinationEnum = Destination.valueOf(pDestino.toUpperCase().replace(" ", "_").replace("Ñ", "N"));
+        Weather weatherEnum = Weather.valueOf(pClimatica.toUpperCase().replace(" ", "_").replace("Í", "I"));
+        Activity activityEnum = Activity.valueOf(pActividad.toUpperCase().replace(" ", "_"));
+        Accommodation accommodationEnum = Accommodation.valueOf(pAlojamiento.toUpperCase().replace(" ", "_"));
+        TravelDuration travelDurationEnum = TravelDuration.valueOf(dViaje.toUpperCase().replace(" ", "_").replace("-", "_").replace(" ", "_").replace("Á", "A"));
+        Age ageEnum = Age.valueOf(edad.toUpperCase().replace(" ", "_").replace("-", "_").replace("Á", "A").replace(" ", "_").replace(" ", "_").replace("Ñ","N"));
+
 
         return _destinationOptionsRepository.findByCombination(
-                destinationEnum, weatherEnum, activityEnum, accommodationEnum, travelDurationEnum, ageEnum
-                ).map(option -> new DestinationResponse(option.getdestinoA(), option.getdestinoE()))
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Destination Not Found"));
+                        destinationEnum, weatherEnum, activityEnum, accommodationEnum, travelDurationEnum, ageEnum
+                ).map(option -> {
+                    List<DestinationInfo> destinationInfos = _destinoInfoRespository.searchByName(option.getidAmericaDestination(), option.getidEuropaDestination());
+                    return new DestinationResponse(option.getidAmericaDestination(), option.getidEuropaDestination(), destinationInfos);
+                })
+                .orElseGet(() -> {
+                    List<DestinationInfo> defaultDestinationInfos = _destinoInfoRespository.searchByName("Bora Bora", "Dubái");
+                    return new DestinationResponse("Bora Bora", "Dubái", defaultDestinationInfos);
+                });
+
     }
 
-    // Método para enviar destino
-//    public DestinationResponse enviarDestino(String pDestino, String pClimatica, String pActividad, String pAlojamiento, String dViaje, String edad) {
-//
-//        DestinationRequest destinationRequest = new DestinationRequest(pDestino, pClimatica, pActividad, pAlojamiento, dViaje, edad);
-//
-//        // Reseteamos destinos antes de procesar
-//        String destinoA = "";
-//        String destinoE = "";
-//
-//        // Lógica principal
-//        switch (pDestino) {
-//            // Si el destino es playa
-//            case "Playa":
-//                if ("Caluroso".equals(pClimatica)) {
-//                    switch (dViaje) {
-//                        case "1-2 semanas":
-//                            if ("Menos de 30 años".equals(edad) && "Deportes y Aventuras".equals(pActividad) && "Hostal o Albergue".equals(pAlojamiento)) {
-//                                destinoA = "Tulum";
-//                                destinoE = "Ibiza";
-//                            } else if ("Menos de 30 años".equals(edad) && "Relax y Bienestar".equals(pActividad) && "Hotel de Lujo".equals(pAlojamiento)) {
-//                                destinoA = "Playa del Carmen";
-//                                destinoE = "Santorini";
-//                            } else if ("30-50 años".equals(edad) && "Cultura y Museos".equals(pActividad) && "Hotel de Lujo".equals(pAlojamiento)) {
-//                                destinoA = "Honolulu";
-//                                destinoE = "Malta";
-//                            }
-//                            break;
-//                        case "Menos de una semana":
-//                            if ("Menos de 30 años".equals(edad) && "Cultura y Museos".equals(pActividad) && "Airbnb".equals(pAlojamiento)) {
-//                                destinoA = "Cartagena";
-//                                destinoE = "Barcelona";
-//                            }
-//                            break;
-//                    }
-//                } else if ("Templado".equals(pClimatica)) {
-//                    switch (dViaje) {
-//                        case "1-2 semanas":
-//                            if ("Menos de 30 años".equals(edad) && "Cultura y Museos".equals(pActividad) && "Hostal o Albergue".equals(pAlojamiento)) {
-//                                destinoA = "San Juan";
-//                                destinoE = "Niza";
-//                            } else if ("30-50 años".equals(edad) && "Cultura y Museos".equals(pActividad) && "Hotel de Lujo".equals(pAlojamiento)) {
-//                                destinoA = "Río de Janeiro";
-//                                destinoE = "Lisboa";
-//                            }
-//                            break;
-//                        case "Más de dos semanas":
-//                            if ("Más de 50 años".equals(edad) && "Relax y Bienestar".equals(pActividad) && "Airbnb".equals(pAlojamiento)) {
-//                                destinoA = "Punta Cana";
-//                                destinoE = "Algarve";
-//                            }
-//                            break;
-//                    }
-//                }
-//                break;
-//            // Si el destino es Montaña
-//            case "Montaña":
-//                if ("Frío".equals(pClimatica) && "1-2 semanas".equals(dViaje)) {
-//                    if ("Más de 50 años".equals(edad) && "Airbnb".equals(pAlojamiento)) {
-//                        if ("Cultura y Museos".equals(pActividad)) {
-//                            destinoA = "Ushuaia";
-//                            destinoE = "Reykjavik";
-//                        } else if ("Relax y Bienestar".equals(pActividad)) {
-//                            destinoA = "Aspen";
-//                            destinoE = "Innsbruck";
-//                        }
-//                    } else if ("Menos de 30 años".equals(edad) && "Hostal o Albergue".equals(pAlojamiento) && "Deportes y Aventuras".equals(pActividad)) {
-//                        destinoA = "Bariloche";
-//                        destinoE = "Interlaken";
-//                    } else if ("30-50 años".equals(edad) && "Hotel de Lujo".equals(pAlojamiento) && "Deportes y Aventuras".equals(pActividad)) {
-//                        destinoA = "Banff";
-//                        destinoE = "Zermatt";
-//                    }
-//                } else if ("Templado".equals(pClimatica) && "1-2 semanas".equals(dViaje)) {
-//                    if ("Más de 50 años".equals(edad) && "Airbnb".equals(pAlojamiento) && "Cultura y Museos".equals(pActividad)) {
-//                        destinoA = "Cusco";
-//                        destinoE = "Granada";
-//                    } else if ("Menos de 30 años".equals(edad) && "Airbnb".equals(pAlojamiento) && "Deportes y Aventuras".equals(pActividad) && "Más de dos semanas".equals(dViaje)) {
-//                        destinoA = "Machu Picchu";
-//                        destinoE = "Chamonix";
-//                    }
-//                }
-//                break;
-//            // Si el destino es Ciudad
-//            case "Ciudad":
-//                if ("Caluroso".equals(pClimatica) && "1-2 semanas".equals(dViaje) && "Más de 50 años".equals(edad) && "Hotel de Lujo".equals(pAlojamiento) && "Cultura y Museos".equals(pActividad)) {
-//                    destinoA = "Los Angeles";
-//                    destinoE = "Roma";
-//                } else if ("Frío".equals(pClimatica) && "1-2 semanas".equals(dViaje) && "30-50 años".equals(edad) && "Hotel de Lujo".equals(pAlojamiento) && "Cultura y Museos".equals(pActividad)) {
-//                    destinoA = "Toronto";
-//                    destinoE = "Berlín";
-//                } else if ("Templado".equals(pClimatica) && "1-2 semanas".equals(dViaje) && "Cultura y Museos".equals(pActividad)) {
-//                    if ("30-50 años".equals(edad) && "Hostal o Albergue".equals(pAlojamiento)) {
-//                        destinoA = "Ciudad de México";
-//                        destinoE = "Madrid";
-//                    } else if ("Más de 50 años".equals(edad) && "Hotel de Lujo".equals(pAlojamiento)) {
-//                        destinoA = "Nueva York";
-//                        destinoE = "París";
-//                    }
-//                } else if ("Templado".equals(pClimatica) && "Menos de una semana".equals(dViaje)) {
-//                    if ("Menos de 30 años".equals(edad) && "Airbnb".equals(pAlojamiento) && "Relax y Bienestar".equals(pActividad)) {
-//                        destinoA = "Miami";
-//                        destinoE = "Viena";
-//                    } else if ("30-50 años".equals(edad) && "Hotel de Lujo".equals(pAlojamiento) && "Deportes y Aventuras".equals(pActividad)) {
-//                        destinoA = "Chicago";
-//                        destinoE = "Londres";
-//                    }
-//                }
-//                break;
-//        }
-//
-//        // Si no se ha asignado ningún destino, sugerimos alternativas predeterminadas
-//        if (destinoA.isEmpty()) {
-//            destinoA = "Bora Bora";
-//            destinoE = "Dubái";
-//        }
-//
-//        // Crear el objeto con los destinos seleccionados
-//        DestinationResponse destinationResponse = new DestinationResponse(destinoA, destinoE);
-//
-//        // Guardar los destinos de el usuario en la base de datos
-//        //destinoRepository.save(destinoRequest);
-//
-//        // Asignamos los destinos
-//        return destinationResponse;
-//    }
+    @Transactional
+    public void loadCombinations() {
+        // Actualizar la restricción CHECK en la tabla destination_options
+        String dropConstraint = "ALTER TABLE destination_options DROP CONSTRAINT destination_options_travel_duration_check;";
+        String addConstraint = "ALTER TABLE destination_options ADD CONSTRAINT destination_options_travel_duration_check CHECK (travel_duration IN ('MENOS_DE_UNA_SEMANA', '_1_2_SEMANAS', 'MAS_DE_DOS_SEMANAS'));";
+
+        String dropAgeConstraint = "ALTER TABLE destination_options DROP CONSTRAINT destination_options_age_check;";
+        String addAgeConstraint = "ALTER TABLE destination_options ADD CONSTRAINT destination_options_age_check CHECK (age IN ('MENOS_DE_30_ANOS', '_30_50_ANOS', 'MAS_DE_50_ANOS'));";
+
+        // Ejecutar las sentencias SQL
+        _destinationOptionsRepository.dropTravelDurationCheckConstraint();
+        _destinationOptionsRepository.addTravelDurationCheckConstraint();
+        _destinationOptionsRepository.dropAgeCheckConstraint();
+        _destinationOptionsRepository.addAgeCheckConstraint();
+
+        // Define the combinations
+        DestinationOptions[] combinations = {
+                new DestinationOptions(Destination.PLAYA, Weather.CALUROSO, Activity.RELAX_Y_BIENESTAR, Accommodation.HOTEL_DE_LUJO, TravelDuration._1_2_SEMANAS, Age.MENOS_DE_30_ANOS, "Playa del Carmen", "Santorini"),
+                new DestinationOptions(Destination.PLAYA, Weather.CALUROSO, Activity.CULTURA_Y_MUSEOS, Accommodation.AIRBNB, TravelDuration.MENOS_DE_UNA_SEMANA, Age.MENOS_DE_30_ANOS, "Cartagena", "Barcelona"),
+                new DestinationOptions(Destination.PLAYA, Weather.TEMPLADO, Activity.CULTURA_Y_MUSEOS, Accommodation.HOTEL_DE_LUJO, TravelDuration._1_2_SEMANAS, Age._30_50_ANOS, "Rio de Janeiro", "Lisboa"),
+                new DestinationOptions(Destination.MONTANA, Weather.FRIO, Activity.DEPORTES_Y_AVENTURAS, Accommodation.HOSTAL_O_ALBERGUE, TravelDuration._1_2_SEMANAS, Age.MENOS_DE_30_ANOS, "Bariloche", "Interlaken"),
+                new DestinationOptions(Destination.MONTANA, Weather.TEMPLADO, Activity.CULTURA_Y_MUSEOS, Accommodation.AIRBNB, TravelDuration._1_2_SEMANAS, Age.MAS_DE_50_ANOS, "Cusco", "Granada"),
+                new DestinationOptions(Destination.MONTANA, Weather.FRIO, Activity.DEPORTES_Y_AVENTURAS, Accommodation.HOTEL_DE_LUJO, TravelDuration._1_2_SEMANAS, Age._30_50_ANOS, "Banff", "Zermatt"),
+                new DestinationOptions(Destination.CIUDAD, Weather.TEMPLADO, Activity.CULTURA_Y_MUSEOS, Accommodation.HOTEL_DE_LUJO, TravelDuration._1_2_SEMANAS, Age.MAS_DE_50_ANOS, "Nueva York", "París" ),
+                new DestinationOptions(Destination.CIUDAD, Weather.TEMPLADO, Activity.RELAX_Y_BIENESTAR, Accommodation.AIRBNB, TravelDuration.MENOS_DE_UNA_SEMANA, Age.MENOS_DE_30_ANOS, "Miami", "Viena"),
+                new DestinationOptions(Destination.CIUDAD, Weather.FRIO, Activity.CULTURA_Y_MUSEOS, Accommodation.HOTEL_DE_LUJO, TravelDuration._1_2_SEMANAS, Age._30_50_ANOS, "Toronto", "Berlín"),
+                new DestinationOptions(Destination.PLAYA, Weather.CALUROSO, Activity.DEPORTES_Y_AVENTURAS, Accommodation.HOSTAL_O_ALBERGUE, TravelDuration._1_2_SEMANAS, Age.MENOS_DE_30_ANOS, "Tulum", "Ibiza"),
+                new DestinationOptions(Destination.MONTANA, Weather.FRIO, Activity.CULTURA_Y_MUSEOS, Accommodation.AIRBNB, TravelDuration._1_2_SEMANAS, Age.MAS_DE_50_ANOS, "Ushuaia", "Reykjavik"),
+                new DestinationOptions(Destination.PLAYA, Weather.TEMPLADO, Activity.RELAX_Y_BIENESTAR, Accommodation.AIRBNB, TravelDuration.MAS_DE_DOS_SEMANAS, Age.MAS_DE_50_ANOS, "Punta Cana", "Algarve"),
+                new DestinationOptions(Destination.CIUDAD, Weather.TEMPLADO, Activity.DEPORTES_Y_AVENTURAS, Accommodation.HOTEL_DE_LUJO, TravelDuration.MENOS_DE_UNA_SEMANA, Age._30_50_ANOS, "Chicago", "Londres"),
+                new DestinationOptions(Destination.PLAYA, Weather.TEMPLADO, Activity.CULTURA_Y_MUSEOS, Accommodation.HOSTAL_O_ALBERGUE, TravelDuration._1_2_SEMANAS, Age.MENOS_DE_30_ANOS, "San Juan", "Niza"),
+                new DestinationOptions(Destination.MONTANA, Weather.TEMPLADO, Activity.DEPORTES_Y_AVENTURAS, Accommodation.AIRBNB, TravelDuration.MAS_DE_DOS_SEMANAS, Age.MENOS_DE_30_ANOS, "Machu Picchu", "Chamonix"),
+                new DestinationOptions(Destination.CIUDAD, Weather.CALUROSO, Activity.CULTURA_Y_MUSEOS, Accommodation.HOTEL_DE_LUJO, TravelDuration._1_2_SEMANAS, Age.MAS_DE_50_ANOS, "Los Ángeles", "Roma"),
+                new DestinationOptions(Destination.PLAYA, Weather.CALUROSO, Activity.CULTURA_Y_MUSEOS, Accommodation.HOTEL_DE_LUJO, TravelDuration._1_2_SEMANAS, Age._30_50_ANOS, "Honolulu", "Malta"),
+                new DestinationOptions(Destination.MONTANA, Weather.FRIO, Activity.RELAX_Y_BIENESTAR, Accommodation.AIRBNB, TravelDuration._1_2_SEMANAS, Age.MAS_DE_50_ANOS, "Aspen", "Innsbruck"),
+                new DestinationOptions(Destination.CIUDAD, Weather.TEMPLADO, Activity.CULTURA_Y_MUSEOS, Accommodation.HOSTAL_O_ALBERGUE, TravelDuration._1_2_SEMANAS, Age._30_50_ANOS, "Ciudad de México", "Madrid"),
+                // Add more combinations as needed
+        };
+
+        // Save the combinations to the database
+        _destinationOptionsRepository.saveAll(Arrays.asList(combinations));
+    }
 
     // FindAll
     @Override
@@ -195,6 +122,6 @@ public class DestinationService implements BaseDestinoInfoService {
 //            _destinoInfoRespository.delete(destinoInfoDelete);
 //            return destinoInfoDelete;
 //        }
-//        return null;
-//    }
+//        return null;
+//    }
 }
