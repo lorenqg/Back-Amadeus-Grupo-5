@@ -16,6 +16,12 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<DestinationEntity> destinationResponses;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private  List<ReportsEntity> reports;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<UserQueryEntity> userQuery;
+
     public int getId() {
         return id;
     }

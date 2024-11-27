@@ -8,9 +8,7 @@ import com.adventureAPI.AdventureAPI.models.enums.*;
 import com.adventureAPI.AdventureAPI.repositories.DestinationInfoRepository;
 import com.adventureAPI.AdventureAPI.repositories.DestinationOptionsRepository;
 import jakarta.transaction.Transactional;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Arrays;
 import java.util.List;
