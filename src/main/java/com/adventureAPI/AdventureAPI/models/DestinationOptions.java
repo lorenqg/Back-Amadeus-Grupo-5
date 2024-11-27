@@ -34,6 +34,9 @@ public class DestinationOptions {
     private String nameAmericaDestination;
     private String nameEuropaDestination;
 
+    @OneToMany(mappedBy = "destinationOptions", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<DestinationInfo> destinationInfo;
+
     public DestinationOptions() {
     }
 
@@ -118,5 +121,13 @@ public class DestinationOptions {
 
     public void setNameEuropaDestination(String nameEuropaDestination) {
         this.nameEuropaDestination = nameEuropaDestination;
+    }
+
+    public List<DestinationInfo> getDestinationInfo() {
+        return destinationInfo;
+    }
+
+    public void setDestinationInfo(List<DestinationInfo> destinationInfo) {
+        this.destinationInfo = destinationInfo;
     }
 }

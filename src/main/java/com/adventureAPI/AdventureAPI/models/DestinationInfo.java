@@ -2,8 +2,6 @@ package com.adventureAPI.AdventureAPI.models;
 
 import jakarta.persistence.*;
 
-
-
 @Entity
 @Table(name = "destino_info")
 public class DestinationInfo {
@@ -18,6 +16,9 @@ public class DestinationInfo {
     private String img;
     private String continente;
 
+    @ManyToOne
+    @JoinColumn(name = "destination_options_id")
+    private DestinationOptions destinationOptions;
 
     public int getId() {
         return id;
