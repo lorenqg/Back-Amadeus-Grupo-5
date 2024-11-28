@@ -61,12 +61,11 @@ public class UserService {
     }
 
     //login
-    @Override
     public Map<String, String> login(User user) {
         if(user.getEmail() == null || user.getEmail().isEmpty() ||user.getName() == null || user.getName().isEmpty()){
             throw new RuntimeException("Email and name are required");
         };
-        User foundUser = _userRepository.findByEmailAndName(user.getEmail(), user.getName());
+        User foundUser = userRepository.findByEmailAndName(user.getEmail(), user.getName());
         if (foundUser != null) {
 
             Map<String, String> response = new HashMap<>();
