@@ -24,5 +24,4 @@ public interface ReportsRepository extends CrudRepository<ReportsEntity, Integer
     Optional<ReportsEntity> getById(int id);
 
     ReportsEntity saveAndFlush(ReportsEntity report);
-
 }

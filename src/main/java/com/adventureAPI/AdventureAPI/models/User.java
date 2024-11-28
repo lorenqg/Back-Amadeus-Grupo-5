@@ -1,7 +1,7 @@
+// User.java
 package com.adventureAPI.AdventureAPI.models;
 
 import jakarta.persistence.*;
-
 import java.util.List;
 
 @Entity
@@ -14,13 +14,13 @@ public class User {
     private String email;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<DestinationEntity> destinationResponses;
-
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private  List<ReportsEntity> reports;
+    private List<ReportsEntity> reports;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<UserQueryEntity> userQuery;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<DestinationInfo> destinoInfo;
 
     public int getId() {
         return id;
@@ -44,5 +44,29 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email ;
+    }
+
+    public List<ReportsEntity> getReports() {
+        return reports;
+    }
+
+    public void setReports(List<ReportsEntity> reports) {
+        this.reports = reports;
+    }
+
+    public List<UserQueryEntity> getUserQuery() {
+        return userQuery;
+    }
+
+    public void setUserQuery(List<UserQueryEntity> userQuery) {
+        this.userQuery = userQuery;
+    }
+
+    public List<DestinationInfo> getDestinoInfo() {
+        return destinoInfo;
+    }
+
+    public void setDestinoInfo(List<DestinationInfo> destinoInfo) {
+        this.destinoInfo = destinoInfo;
     }
 }

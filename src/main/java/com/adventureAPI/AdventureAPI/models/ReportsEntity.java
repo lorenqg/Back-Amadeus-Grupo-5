@@ -1,13 +1,12 @@
+// ReportsEntity.java
 package com.adventureAPI.AdventureAPI.models;
 
 import jakarta.persistence.*;
-
 import java.util.List;
 
 @Entity
 @Table(name = "reports")
 public class ReportsEntity {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -16,9 +15,9 @@ public class ReportsEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    private User userId;
+    private User user;
 
-        @OneToMany(mappedBy = "report", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "report", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<UserQueryEntity> userQueries;
 
     public int getId() {
@@ -45,12 +44,12 @@ public class ReportsEntity {
         this.nameReport = nameReport;
     }
 
-    public User getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserId(User userId) {
-        this.userId = userId;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public List<UserQueryEntity> getUserQueries() {
@@ -60,5 +59,4 @@ public class ReportsEntity {
     public void setUserQueries(List<UserQueryEntity> userQueries) {
         this.userQueries = userQueries;
     }
-
 }

@@ -1,5 +1,7 @@
 package com.adventureAPI.AdventureAPI.controllers;
 
+import com.adventureAPI.AdventureAPI.contracts.request.ReportRequest;
+import com.adventureAPI.AdventureAPI.contracts.responses.ReportResponse;
 import com.adventureAPI.AdventureAPI.models.ReportsEntity;
 import com.adventureAPI.AdventureAPI.services.ReportsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,20 +11,20 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/reports")
+@RequestMapping("/api/reports")
 public class ReportsController {
-
     private final ReportsService _reportsService;
 
     @Autowired
-    public ReportsController(ReportsService reportsService){
-        this._reportsService = reportsService;
+    public ReportsController(ReportsService _reportsService) {
+        this._reportsService = _reportsService;
     }
 
     @PostMapping("/createReport")
-    public ResponseEntity<?> createReport(@RequestBody ReportsEntity report) {
+    public ResponseEntity<?> createReport(@RequestBody ReportRequest reportRequest) {
         try {
-            return ResponseEntity.ok(_reportsService.saveAndFlush(report));
+            ReportResponse reportResponse = _reportsService.saveAndFlush(reportRequest);
+            return ResponseEntity.ok(reportResponse);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
@@ -46,5 +48,4 @@ public class ReportsController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
-
 }

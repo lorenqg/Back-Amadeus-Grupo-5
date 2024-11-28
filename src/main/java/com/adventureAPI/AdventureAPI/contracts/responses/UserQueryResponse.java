@@ -1,20 +1,25 @@
 package com.adventureAPI.AdventureAPI.contracts.responses;
 
 public class UserQueryResponse {
-
     private String pDestino;
     private String pClimatica;
     private String pActividad;
+    private String pAlojamiento;
     private String dViaje;
     private String edad;
 
-    public UserQueryResponse(String pDestino, String pClimatica, String pActividad, String dViaje, String edad) {
+
+    // Constructor
+    public UserQueryResponse(String pDestino, String pClimatica, String pActividad, String pAlojamiento, String dViaje, String edad) {
         this.pDestino = pDestino;
         this.pClimatica = pClimatica;
         this.pActividad = pActividad;
+        this.pAlojamiento = pAlojamiento;
         this.dViaje = dViaje;
         this.edad = edad;
     }
+
+    // Getters and Setters
 
     public String getpDestino() {
         return pDestino;
@@ -40,6 +45,14 @@ public class UserQueryResponse {
         this.pActividad = pActividad;
     }
 
+    public String getpAlojamiento() {
+        return pAlojamiento;
+    }
+
+    public void setpAlojamiento(String pAlojamiento) {
+        this.pAlojamiento = pAlojamiento;
+    }
+
     public String getdViaje() {
         return dViaje;
     }
@@ -55,4 +68,5 @@ public class UserQueryResponse {
     public void setEdad(String edad) {
         this.edad = edad;
     }
+
 }

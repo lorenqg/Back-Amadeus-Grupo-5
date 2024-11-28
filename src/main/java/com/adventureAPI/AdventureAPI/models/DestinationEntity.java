@@ -1,11 +1,11 @@
+// DestinationEntity.java
 package com.adventureAPI.AdventureAPI.models;
 
 import jakarta.persistence.*;
-
 import java.util.List;
-import java.util.Set;
 
 @Entity
+@Table(name = "destination_response")
 public class DestinationEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -13,8 +13,8 @@ public class DestinationEntity {
     private String americaDestination;
     private String europaDestination;
 
-   // @OneToMany(mappedBy = "destinationEntity")
-    //private Set<DestinationInfo> destinationInfo;
+    @OneToMany(mappedBy = "destinationEntity", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<DestinationInfo> destinationInfo;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -26,6 +26,7 @@ public class DestinationEntity {
     public DestinationEntity(String americaDestination, String europaDestination, List<DestinationInfo> destinationInfo) {
         this.americaDestination = americaDestination;
         this.europaDestination = europaDestination;
+        this.destinationInfo = destinationInfo;
     }
 
     public String getAmericaDestination() {
@@ -42,6 +43,14 @@ public class DestinationEntity {
 
     public void setEuropaDestination(String europaDestination) {
         this.europaDestination = europaDestination;
+    }
+
+    public List<DestinationInfo> getDestinationInfo() {
+        return destinationInfo;
+    }
+
+    public void setDestinationInfo(List<DestinationInfo> destinationInfo) {
+        this.destinationInfo = destinationInfo;
     }
 
     public User getUser() {

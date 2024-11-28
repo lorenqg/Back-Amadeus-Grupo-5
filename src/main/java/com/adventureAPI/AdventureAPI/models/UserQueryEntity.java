@@ -5,7 +5,6 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "user_query")
 public class UserQueryEntity {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -23,7 +22,6 @@ public class UserQueryEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "report_id", nullable = false)
     private ReportsEntity report;
-
 
     public int getId() {
         return id;
@@ -81,19 +79,7 @@ public class UserQueryEntity {
         this.edad = edad;
     }
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public ReportsEntity getReport() {
+    public Object getReport() {
         return report;
-    }
-
-    public void setReport(ReportsEntity report) {
-        this.report = report;
     }
 }

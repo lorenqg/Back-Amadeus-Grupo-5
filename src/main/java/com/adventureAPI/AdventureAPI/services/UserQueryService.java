@@ -20,7 +20,14 @@ public class UserQueryService {
 
     @Transactional
     public UserQueryEntity saveAndFlush(UserQueryRequest userQuery, ReportsEntity report) {
-        return _userQueryRepository.saveAndFlush(userQuery, report);
+        UserQueryEntity entity = new UserQueryEntity();
+        entity.setpDestino(userQuery.getpDestino());
+        entity.setpClimatica(userQuery.getpClimatica());
+        entity.setpActividad(userQuery.getpActividad());
+        entity.setpAlojamiento(userQuery.getpAlojamiento());
+        entity.setdViaje(userQuery.getdViaje());
+        entity.setEdad(userQuery.getEdad());
+        return _userQueryRepository.saveAndFlush(entity);
     }
 
     public UserQueryEntity getById(int id) {
@@ -29,5 +36,15 @@ public class UserQueryService {
 
     public List<UserQueryEntity> index() {
         return _userQueryRepository.index();
+    }
+
+    public List<UserQueryEntity> findByReportId(int id) {
+        try {
+            return _userQueryRepository.findById(id)
+                    .map(UserQueryEntity::getReport)
+                    .orElse(null) != null ? _userQueryRepository.findByReportId(id) : null;
+        } catch (Exception e) {
+            throw new RuntimeException("Error retrieving user queries by report id", e);
+        }
     }
 }

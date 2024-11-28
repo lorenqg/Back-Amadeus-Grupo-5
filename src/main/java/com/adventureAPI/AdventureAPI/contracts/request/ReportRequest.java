@@ -1,15 +1,16 @@
 package com.adventureAPI.AdventureAPI.contracts.request;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import org.hibernate.mapping.List;
+
+import java.util.List;
 
 public class ReportRequest {
+    private Long userId;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private String reportTime;
-    private String nameReport;
-    private Long userId;
 
+    private String nameReport;
     private List<UserQueryRequest> userQueries;
 
     public ReportRequest(String reportTime, String nameReport, Long userId, List<UserQueryRequest> userQueries) {
@@ -51,3 +52,4 @@ public class ReportRequest {
         this.userQueries = userQueries;
     }
 }
+
