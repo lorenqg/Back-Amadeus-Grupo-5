@@ -9,10 +9,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/user")
-@CrossOrigin(origins = "*")
 public class UserController {
 
     @Autowired
@@ -68,6 +68,17 @@ public class UserController {
     public ResponseEntity<List<User>> searchEmail(@PathVariable String email) {
         List<User> users = new UserService(_userRepository).searchByEmail(email);
         return new ResponseEntity<>(users, HttpStatus.OK);
+    }
+
+    //Login
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody User user) {
+        try {
+            Map<String, String> response = new UserService(_userRepository).login(user);
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.UNAUTHORIZED);
+        }
     }
 
 }

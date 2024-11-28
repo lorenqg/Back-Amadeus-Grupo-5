@@ -5,7 +5,9 @@ import com.adventureAPI.AdventureAPI.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class UserService {
@@ -56,5 +58,23 @@ public class UserService {
 
     public User convertToResponse(User user) {
         return user;
+    }
+
+    //login
+    @Override
+    public Map<String, String> login(User user) {
+        if(user.getEmail() == null || user.getEmail().isEmpty() ||user.getName() == null || user.getName().isEmpty()){
+            throw new RuntimeException("Email and name are required");
+        };
+        User foundUser = _userRepository.findByEmailAndName(user.getEmail(), user.getName());
+        if (foundUser != null) {
+
+            Map<String, String> response = new HashMap<>();
+            response.put("message", "Login success");
+            response.put("user", String.valueOf(foundUser.getName()));
+            return response;
+        }else {
+            throw new RuntimeException("User not found");
+        }
     }
 }
