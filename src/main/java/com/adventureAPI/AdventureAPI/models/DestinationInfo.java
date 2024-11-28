@@ -24,6 +24,10 @@ public class DestinationInfo {
     @JoinColumn(name = "destination_entity_id")
     private DestinationEntity destinationEntity;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
+
     public int getId() {
         return id;
     }

@@ -11,7 +11,7 @@ public interface DestinationInfoRepository extends CrudRepository<DestinationInf
     //FindAll
     @Query(
             nativeQuery = true,
-            value = "SELECT * FROM destino_info"
+            value = "SELECT * FROM destination_info"
     )
     List<DestinationInfo> index();
 
@@ -21,14 +21,14 @@ public interface DestinationInfoRepository extends CrudRepository<DestinationInf
     //FindByName
     @Query(
             nativeQuery = true,
-            value = "SELECT * FROM destino_info WHERE nombre_destino LIKE %:destino1% OR nombre_destino LIKE %:destino2%"
+            value = "SELECT * FROM destination_info WHERE nombre_destino LIKE %:destino1% OR nombre_destino LIKE %:destino2%"
     )
     List<DestinationInfo> searchByName(String destino1, String destino2);
 
     //FindById
     @Query(
             nativeQuery = true,
-            value = "SELECT * FROM destino_info WHERE id = :id"
+            value = "SELECT * FROM destination_info WHERE id = :id"
     )
     List<DestinationInfo> searchById(int id);
 

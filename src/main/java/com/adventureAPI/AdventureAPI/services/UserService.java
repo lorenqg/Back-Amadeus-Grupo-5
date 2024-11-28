@@ -1,69 +1,63 @@
 package com.adventureAPI.AdventureAPI.services;
 
-import com.adventureAPI.AdventureAPI.interfaces.BaseUserService;
 import com.adventureAPI.AdventureAPI.models.User;
 import com.adventureAPI.AdventureAPI.repositories.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class UserService implements BaseUserService{
-    private UserRepository _userRepository;
+@Service
+public class UserService {
 
+    private final UserRepository userRepository;
+
+    @Autowired
     public UserService(UserRepository userRepository) {
-        _userRepository = userRepository;
+        this.userRepository = userRepository;
     }
-    //FindAll
-    @Override
+
     public List<User> index() {
-        return _userRepository.index();
+        return userRepository.findAll();
     }
 
-    //    Create
-    @Override
     public User create(User user) {
-        return _userRepository.saveAndFlush(user);
+        return userRepository.save(user);
     }
 
-    //Update
-    @Override
     public User update(int id, User user) {
-        List<User> userList = _userRepository.searchId(id);
-        if (userList.size() > 0) {
-            User userUpdate = userList.get(0);
-            userUpdate.setName(user.getName());
-            userUpdate.setEmail(user.getEmail());
-            return _userRepository.saveAndFlush(userUpdate);
-        }
-        return null;
+        User existingUser = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
+        existingUser.setName(user.getName());
+        existingUser.setEmail(user.getEmail());
+        return userRepository.save(existingUser);
     }
 
-    //Delete
-    @Override
     public User delete(int id) {
-        List<User> userList = _userRepository.searchId(id);
-        if (userList.size() > 0) {
-            User userDelete = userList.get(0);
-            _userRepository.delete(userDelete);
-            return userDelete;
-        }
-        return null;
+        User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
+        userRepository.delete(user);
+        return user;
     }
 
-    @Override
     public List<User> searchById(int id) {
-        return _userRepository.searchId(id);
+        return userRepository.findById(id).stream().toList();
     }
 
-    @Override
     public List<User> searchByName(String name) {
-        return _userRepository.searchName(name);
+        return userRepository.searchName(name);
     }
 
-    @Override
     public List<User> searchByEmail(String email) {
-        return _userRepository.searchEmail(email);
+        return userRepository.searchEmail(email);
+    }
+
+    public User getById(int id) {
+        return userRepository.findById(id).orElse(null);
+    }
+
+    public User convertToResponse(User user) {
+        return user;
     }
 
     //login
