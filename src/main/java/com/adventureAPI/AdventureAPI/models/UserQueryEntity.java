@@ -1,5 +1,7 @@
+// UserQueryEntity.java
 package com.adventureAPI.AdventureAPI.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
@@ -17,11 +19,29 @@ public class UserQueryEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
+    @JsonIgnore
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "report_id", nullable = false)
+    @JsonIgnore
     private ReportsEntity report;
+
+    public UserQueryEntity(int id, String pDestino, String pClimatica, String pActividad, String pAlojamiento, String dViaje, String edad, User user, ReportsEntity report) {
+        this.id = id;
+        this.pDestino = pDestino;
+        this.pClimatica = pClimatica;
+        this.pActividad = pActividad;
+        this.pAlojamiento = pAlojamiento;
+        this.dViaje = dViaje;
+        this.edad = edad;
+        this.user = user;
+        this.report = report;
+    }
+
+    public UserQueryEntity() {
+
+    }
 
     public int getId() {
         return id;
@@ -79,7 +99,19 @@ public class UserQueryEntity {
         this.edad = edad;
     }
 
-    public Object getReport() {
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public ReportsEntity getReport() {
         return report;
+    }
+
+    public void setReport(ReportsEntity report) {
+        this.report = report;
     }
 }

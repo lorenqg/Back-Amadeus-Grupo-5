@@ -1,6 +1,7 @@
 package com.adventureAPI.AdventureAPI.contracts.responses;
 
 public class UserQueryResponse {
+    private int id;
     private String pDestino;
     private String pClimatica;
     private String pActividad;
@@ -8,9 +9,9 @@ public class UserQueryResponse {
     private String dViaje;
     private String edad;
 
-
     // Constructor
-    public UserQueryResponse(String pDestino, String pClimatica, String pActividad, String pAlojamiento, String dViaje, String edad) {
+    public UserQueryResponse(int id, String pDestino, String pClimatica, String pActividad, String pAlojamiento, String dViaje, String edad) {
+        this.id = id;
         this.pDestino = pDestino;
         this.pClimatica = pClimatica;
         this.pActividad = pActividad;
@@ -19,7 +20,14 @@ public class UserQueryResponse {
         this.edad = edad;
     }
 
-    // Getters and Setters
+    // Getters y setters
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getpDestino() {
         return pDestino;
@@ -68,5 +76,4 @@ public class UserQueryResponse {
     public void setEdad(String edad) {
         this.edad = edad;
     }
-
 }

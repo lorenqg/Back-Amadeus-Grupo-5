@@ -1,7 +1,6 @@
 package com.adventureAPI.AdventureAPI.contracts.responses;
 
 import com.adventureAPI.AdventureAPI.models.User;
-import com.adventureAPI.AdventureAPI.models.UserQueryEntity;
 
 import java.util.List;
 
@@ -12,18 +11,21 @@ public class ReportResponse {
     private User user;
     private List<UserQueryResponse> userQueries;
 
-    public ReportResponse(String reportTime, String nameReport, User user, List<UserQueryResponse> userQueries) {
+    public ReportResponse(int id, String reportTime, String nameReport, User user, List<UserQueryResponse> userQueries) {
+        this.id = id;
         this.reportTime = reportTime;
         this.nameReport = nameReport;
         this.user = user;
         this.userQueries = userQueries;
     }
 
-    public ReportResponse() {
-
+    // Getters y setters
+    public int getId() {
+        return id;
     }
 
-    public ReportResponse(int id, String reportTime, String nameReport, User byId, List<UserQueryEntity> userQueries) {
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getReportTime() {
@@ -42,11 +44,11 @@ public class ReportResponse {
         this.nameReport = nameReport;
     }
 
-    public User getUserId() {
+    public User getUser() {
         return user;
     }
 
-    public void setUserId(User user) {
+    public void setUser(User user) {
         this.user = user;
     }
 
@@ -91,7 +93,7 @@ public class ReportResponse {
         }
 
         public ReportResponse build() {
-            ReportResponse response = new ReportResponse();
+            ReportResponse response = new ReportResponse( this.id, this.reportTime, this.nameReport, this.user, this.userQueries);
             response.id = this.id;
             response.reportTime = this.reportTime;
             response.nameReport = this.nameReport;

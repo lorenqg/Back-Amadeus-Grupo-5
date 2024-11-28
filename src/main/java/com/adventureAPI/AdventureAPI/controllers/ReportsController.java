@@ -21,19 +21,20 @@ public class ReportsController {
     }
 
     @PostMapping("/createReport")
-    public ResponseEntity<?> createReport(@RequestBody ReportRequest reportRequest) {
-        try {
-            ReportResponse reportResponse = _reportsService.saveAndFlush(reportRequest);
+    public ResponseEntity<ReportResponse> createReport(@RequestBody ReportRequest reportRequest) {
+        ReportResponse reportResponse = _reportsService.saveAndFlush(reportRequest);
+        if (reportResponse != null) {
             return ResponseEntity.ok(reportResponse);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+        } else {
+            return ResponseEntity.status(500).build();
         }
     }
 
     @GetMapping("/getReportById/{id}")
     public ResponseEntity<?> getReportById(@PathVariable int id) {
         try {
-            return ResponseEntity.ok(_reportsService.getById(id));
+            ReportResponse reportResponse = _reportsService.findByReportId(id);
+            return ResponseEntity.ok(reportResponse);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
@@ -42,7 +43,7 @@ public class ReportsController {
     @GetMapping("/getReports")
     public ResponseEntity<?> getReports() {
         try {
-            List<ReportsEntity> reports = _reportsService.index();
+            List<ReportResponse> reports = _reportsService.index();
             return ResponseEntity.ok(reports);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());

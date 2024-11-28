@@ -1,6 +1,7 @@
 // ReportsEntity.java
 package com.adventureAPI.AdventureAPI.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import java.util.List;
 
@@ -15,9 +16,11 @@ public class ReportsEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    private User user;
+    @JsonIgnore
+    private User user; // Change to UserEntity
 
     @OneToMany(mappedBy = "report", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<UserQueryEntity> userQueries;
 
     public int getId() {
