@@ -18,8 +18,8 @@ public interface BaseDestinoInfoService {
     //SearchById
     List<DestinationInfo> searchById (int id);
 
-    //delete
-    DestinationInfo delete(int id);
+//    //delete
+//    DestinationInfo delete(int id);
 
 
 }
