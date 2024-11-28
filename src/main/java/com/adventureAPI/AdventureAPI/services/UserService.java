@@ -4,7 +4,9 @@ import com.adventureAPI.AdventureAPI.interfaces.BaseUserService;
 import com.adventureAPI.AdventureAPI.models.User;
 import com.adventureAPI.AdventureAPI.repositories.UserRepository;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class UserService implements BaseUserService{
     private UserRepository _userRepository;
@@ -64,5 +66,21 @@ public class UserService implements BaseUserService{
         return _userRepository.searchEmail(email);
     }
 
-    //Metodo con la logica de switch en java
+    //login
+    @Override
+    public Map<String, String> login(User user) {
+        if(user.getEmail() == null || user.getEmail().isEmpty() ||user.getName() == null || user.getName().isEmpty()){
+            throw new RuntimeException("Email and name are required");
+        };
+        User foundUser = _userRepository.findByEmailAndName(user.getEmail(), user.getName());
+        if (foundUser != null) {
+
+            Map<String, String> response = new HashMap<>();
+            response.put("message", "Login success");
+            response.put("user", String.valueOf(foundUser.getName()));
+            return response;
+        }else {
+            throw new RuntimeException("User not found");
+        }
+    }
 }
