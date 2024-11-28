@@ -3,6 +3,7 @@ package com.adventureAPI.AdventureAPI.interfaces;
 import com.adventureAPI.AdventureAPI.models.User;
 
 import java.util.List;
+import java.util.Map;
 
 public interface BaseUserService {
 
@@ -15,6 +16,9 @@ public interface BaseUserService {
 
     //Create
     User create(User user);
+
+    //Login
+    Map<String, String> login(User user);
 
     //UpdateAndFlush
     User update(int id, User user );
