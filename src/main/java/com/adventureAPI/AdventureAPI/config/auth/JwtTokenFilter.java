@@ -33,7 +33,6 @@ public class JwtTokenFilter extends OncePerRequestFilter {
             String token = header.substring(7);
             if (jwtTokenProvider.validateToken(token)) {
                 Claims claims = jwtTokenProvider.getClaims(token);
-                System.out.println("Token válido: " + claims.getSubject());
 
                 // Configurar la autenticación
                 String username = claims.getSubject(); // Obteniendo el username
