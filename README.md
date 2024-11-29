@@ -36,6 +36,10 @@ El proyecto está estructurado de la siguiente manera:
                 - `adventureAPI/`
                     - `AdventureAPI/`
 
+
+## Diagrama de Entidad - Relacion
+![img.png](img.png)
+
 ## Configuración
 
 ### Variables de Entorno
